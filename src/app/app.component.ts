@@ -64,15 +64,8 @@ export class AppComponent implements OnInit  {
   titleArray:titleStruct[]=[];
   titleDisplay:titleStruct[]=[];
   searchValue:string="";
-  constructor(private getdata:GetDataService){
 
-    this.getdata.sendData.next(titleJson.titles);
-    this.getdata.recieveData.subscribe(data=>
-      {
-
-          this.titleArray=data;
-      }
-      );
+  constructor(private getdataService:GetDataService){
 
 
     this.filteredTitles = this.control.valueChanges.pipe(
@@ -93,46 +86,23 @@ export class AppComponent implements OnInit  {
       this.searchArray=[];
       if(this.searchValue.length>=3)
       {
-        this.changeSearch();
+        this.typeAheadSearch();
 
 
       }
 
   }
 
-  changeSearch(){
+  typeAheadSearch(){
     this.searchArray = [];
 
-    this.titleArray.map((data)=>{
-      let findSubString:boolean=false;
-      switch (this.selectedValue){
-        case "name":
-          findSubString=data.name.toLowerCase().includes(this.searchValue.toLowerCase());
-          if(findSubString)
-          this.searchArray.push(data.name);
-          break;
-        case "level_1_title":
-          if(data.level_1_title!=null)
-          {
-              findSubString=data.level_1_title.toLowerCase().includes(this.searchValue.toLowerCase());
-              if(findSubString)
-              {
+    //fake service working
+    this.getdataService.getTitleListArray(this.selectedValue,this.searchValue).subscribe( data=>{
+        this.searchArray=data;
 
-                {
-                  this.searchArray.push(data.level_1_title);
-                }
+    }
 
-              }
-          }
-            break;
-        case "full_name":
-          findSubString=data.full_name.toLowerCase().includes(this.searchValue.toLowerCase());
-          if(findSubString)
-           this.searchArray.push(data.full_name);
-           break;
-      }
-
-    })
+    )
 
     this.filteredTitles = this.control.valueChanges.pipe(
       startWith(''),
@@ -144,38 +114,16 @@ export class AppComponent implements OnInit  {
   search(){
 
     this.titleDisplay=[];
-    this.titleArray.map(( data )=>{
 
-      let findSubString=false;
-      if(this.selectedValue=="name")
-      {
-          findSubString=data.name.toLowerCase().includes(this.searchValue.toLowerCase());
-          if(findSubString)
-          this.titleDisplay.push(data);
-      }
-      else if(this.selectedValue=="level_1_title")
-      {
-          if(data.level_1_title!=null)
-          {
-            findSubString=data.level_1_title.toLowerCase().includes(this.searchValue.toLowerCase());
-            if(findSubString)
-            this.titleDisplay.push(data);
 
-          }
-
-      }
-      else if(this.selectedValue=="full_name")
-      {
-            findSubString=data.full_name.toLowerCase().includes(this.searchValue.toLowerCase());
-            if(findSubString)
-            this.titleDisplay.push(data);
+    this.getdataService.getTitleListResult(this.selectedValue,this.searchValue).subscribe( data=>{
+        this.titleDisplay=data;
 
       }
 
+    )
 
 
-
-    })
 
   }
   remove(id:string){

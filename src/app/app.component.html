@@ -22,7 +22,7 @@
     <td>
   <mat-form-field appearance="fill">
     <mat-label>Title</mat-label>
-    <mat-select [(ngModel)]="selectedValue" (selectionChange)="changeSearch()">
+    <mat-select [(ngModel)]="selectedValue" (selectionChange)="typeAheadSearch()">
       <mat-option *ngFor="let search of searchList" [value]="search.key">
         {{search.name}}
       </mat-option>
