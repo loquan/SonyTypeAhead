@@ -125,7 +125,7 @@ export class AppComponent implements OnInit  {
           }
             break;
         case "full_name":
-          findSubString=data.level_1_title.toLowerCase().includes(this.searchValue.toLowerCase());
+          findSubString=data.full_name.toLowerCase().includes(this.searchValue.toLowerCase());
           if(findSubString)
            this.searchArray.push(data.full_name);
            break;
