@@ -1,0 +1,70 @@
+
+<div class="toolbar" role="banner">
+  <img
+    width="97"
+    alt="Runner Logo"
+    src="assets/runner_logo.png"
+  />
+  <span>{{ pageTitle }}</span>
+    <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+  <h1>
+    Welcome to {{ title }}
+  </h1>
+  <ul>
+    <li *ngFor="let step of requirements">{{step}}</li>
+  </ul>
+
+  <table>
+    <tr>
+    <td>
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <mat-select [(ngModel)]="selectedValue" (selectionChange)="changeSearch()">
+      <mat-option *ngFor="let search of searchList" [value]="search.key">
+        {{search.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  </td>
+  <td>
+
+  <form class="example-form">
+    <input style="width:400px" matInput
+           type="text"
+           #keyStroke
+           placeholder="Search Field"
+           [formControl]="control"
+           [matAutocomplete]="auto"
+           [(ngModel)]="searchValue"
+
+           (keyup)="handleInput(keyStroke.value)"
+           >
+    <mat-autocomplete #auto="matAutocomplete"   >
+      <mat-option *ngFor="let title of filteredTitles | async" [value]="title">
+        {{title}}
+      </mat-option>
+    </mat-autocomplete>
+  </form>
+  </td>
+  <td>
+    <button mat-button color="primary" (click)="search()">Search</button>
+    </td>
+
+  </tr>
+
+</table>
+
+
+
+  <table>
+    <tr ><th>Remove</th><th>ID</th><th>Name</th><th>Title</th><th>Full Name</th></tr>
+  <tr *ngFor="let title of titleDisplay">
+        <td><button (click)="remove(title.id)">remove</button><td>{{title.id}}</td><td>{{title.name}}</td><td> {{title.level_1_title}}</td><td>{{title.full_name}}</td>
+  </tr>
+  </table>
+</div>
+
+
