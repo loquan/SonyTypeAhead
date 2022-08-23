@@ -98,7 +98,8 @@ export class AppComponent implements OnInit  {
 
       }
 
-  }input:any
+  }
+
   changeSearch(){
     this.searchArray = [];
 
