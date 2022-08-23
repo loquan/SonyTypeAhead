@@ -115,7 +115,7 @@ export class AppComponent implements OnInit  {
 
     this.titleDisplay=[];
 
-
+   //fake service working
     this.getdataService.getTitleListResult(this.selectedValue,this.searchValue).subscribe( data=>{
         this.titleDisplay=data;
 
